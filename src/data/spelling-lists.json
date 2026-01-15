@@ -1,0 +1,124 @@
+[
+  {
+    "id": "sort-27",
+    "label": "Sort #27 (ar / air / are / oddball)",
+    "groups": ["ar", "air", "are", "oddball"],
+    "words": [
+      {
+        "word": "part",
+        "sentence": "We need to finish the last part of the puzzle.",
+        "group": "ar"
+      },
+      {
+        "word": "start",
+        "sentence": "We will start the game now.",
+        "group": "ar"
+      },
+      {
+        "word": "harm",
+        "sentence": "Never do harm to animals.",
+        "group": "ar"
+      },
+      {
+        "word": "sharp",
+        "sentence": "Be careful, that knife is sharp.",
+        "group": "ar"
+      },
+      {
+        "word": "dark",
+        "sentence": "It gets dark early in winter.",
+        "group": "ar"
+      },
+      {
+        "word": "shark",
+        "sentence": "The shark swam near the boat.",
+        "group": "ar"
+      },
+      {
+        "word": "chart",
+        "sentence": "The chart shows our progress.",
+        "group": "ar"
+      },
+      {
+        "word": "hair",
+        "sentence": "She brushed her hair before school.",
+        "group": "air"
+      },
+      {
+        "word": "fair",
+        "sentence": "It is only fair to share the toys.",
+        "group": "air"
+      },
+      {
+        "word": "pair",
+        "sentence": "He bought a new pair of shoes.",
+        "group": "air"
+      },
+      {
+        "word": "chair",
+        "sentence": "She sat in a comfortable chair.",
+        "group": "air"
+      },
+      {
+        "word": "stair",
+        "sentence": "Watch your step on the last stair.",
+        "group": "air"
+      },
+      {
+        "word": "care",
+        "sentence": "Take care of your books.",
+        "group": "are"
+      },
+      {
+        "word": "rare",
+        "sentence": "It is rare to see a rainbow twice.",
+        "group": "are"
+      },
+      {
+        "word": "stare",
+        "sentence": "Please do not stare at people.",
+        "group": "are"
+      },
+      {
+        "word": "square",
+        "sentence": "Draw a square on the paper.",
+        "group": "are"
+      },
+      {
+        "word": "bare",
+        "sentence": "He walked in bare feet on the grass.",
+        "group": "are"
+      },
+      {
+        "word": "fare",
+        "sentence": "The bus fare went up this year.",
+        "group": "are"
+      },
+      {
+        "word": "spare",
+        "sentence": "Do you have a spare pencil?",
+        "group": "are"
+      },
+      {
+        "word": "hare",
+        "sentence": "A hare ran across the field.",
+        "group": "are"
+      },
+      {
+        "word": "pear",
+        "sentence": "She ate a juicy pear for a snack.",
+        "group": "oddball"
+      },
+      {
+        "word": "heart",
+        "sentence": "His heart was pounding after the race.",
+        "group": "oddball"
+      },
+      {
+        "word": "bear",
+        "sentence": "A bear wandered near the campsite.",
+        "group": "oddball"
+      }
+    ]
+  }
+]
