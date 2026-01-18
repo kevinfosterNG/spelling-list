@@ -424,7 +424,7 @@ export default function Home() {
                     </article>
                   ))}
                   {!buckets[bucketKey]?.length && (
-                    <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-[#e7d3da] bg-[#f9f0f3] p-4 text-sm text-[#7a0e1f]">
+                    <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-[#e5e7eb] bg-[#f7f7f8] p-4 text-sm text-[#4b5563]">
                       Drag a spelled card here
                     </div>
                   )}
