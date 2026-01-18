@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     env:
-      NODE_VERSION: "22.22.0"
+      NODE_VERSION: "20.20.0"
     steps:
       - uses: actions/checkout@v3
         with:
@@ -32,7 +32,7 @@ jobs:
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/" # App source code path
           api_location: "" # Api source code path - optional
-          output_location: ".next" # Built app content directory - optional
+          output_location: "out" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
