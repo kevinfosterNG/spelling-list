@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2, Trash2, Volume2 } from "lucide-react";
+import { CheckCircle2, Info, Trash2, Volume2 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import spellingLists from "@/data/spelling-lists.json";
 
@@ -70,6 +70,7 @@ export default function Home() {
   );
   const [showCheck, setShowCheck] = useState(false);
   const [typedGuess, setTypedGuess] = useState("");
+  const [showInfoModal, setShowInfoModal] = useState(false);
 
   const currentWord = useMemo(() => {
     if (!activeList || !currentWordId) return null;
@@ -190,14 +191,16 @@ export default function Home() {
   const readyWord = currentWord;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 text-slate-900">
+    <main className="min-h-screen bg-gradient-to-br from-[#fff8fb] via-[#f3e2e8] to-[#e6f2ec] text-[#0d0d0d]">
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-        <header className="flex flex-col gap-3 rounded-2xl bg-white/80 p-6 shadow-sm ring-1 ring-slate-100">
+        <header className="flex flex-col gap-3 rounded-2xl bg-white/85 p-6 shadow-sm ring-1 ring-[#f2cfd7]">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h1 className="text-2xl font-semibold sm:text-3xl">
-              Hear it, spell it, then sort it
-            </h1>
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+            <div className="flex items-center gap-2">
+              <h1 className="font-heading text-3xl sm:text-4xl">
+                Hear it, spell it, then sort it
+              </h1>
+            </div>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3">
               <label className="flex w-full max-w-xs items-center gap-3 text-sm font-medium text-slate-700">
                 <select
                   value={selectedListId}
@@ -211,12 +214,20 @@ export default function Home() {
                   ))}
                 </select>
               </label>
+              <button
+                type="button"
+                onClick={() => setShowInfoModal(true)}
+                className="inline-flex items-center justify-center rounded-full border border-[#f2cfd7] bg-white p-2 text-[#1c4c72] shadow-sm transition hover:border-[#e7b9c3] hover:bg-[#fff6f8] hover:text-[#173d5c] active:translate-y-[1px]"
+              >
+                <Info className="h-4 w-4 text-[#1c4c72]" aria-hidden />
+                <span className="sr-only">How to add a new week</span>
+              </button>
             </div>
           </div>
         </header>
 
         {(wordsLeft > 0 || readyWord) && (
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+          <section className="rounded-2xl border border-[#e9d6dc] bg-white p-6 shadow-sm">
             <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <div className="flex items-center gap-2">
                 <button
@@ -226,7 +237,7 @@ export default function Home() {
                     speak(currentWord.word, currentWord.sentence)
                   }
                   disabled={!currentWord}
-                  className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:translate-y-[1px] disabled:cursor-not-allowed disabled:bg-slate-300"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#a6192e] px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#8f1529] active:translate-y-[1px] disabled:cursor-not-allowed disabled:bg-[#e7b9c3]"
                 >
                   <Volume2 className="h-4 w-4" aria-hidden />
                 </button>
@@ -234,7 +245,7 @@ export default function Home() {
                   type="button"
                   onClick={nextPracticeWord}
                   disabled={!remainingIds.length}
-                  className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:border-slate-300 hover:bg-slate-100 active:translate-y-[1px] disabled:cursor-not-allowed disabled:text-slate-400"
+                  className="rounded-lg border border-[#a6192e] bg-white px-3 py-2 text-sm font-semibold text-[#a6192e] transition hover:border-[#8f1529] hover:bg-[#fff6f8] hover:text-[#8f1529] active:translate-y-[1px] disabled:cursor-not-allowed disabled:border-[#e7b9c3] disabled:text-[#e7b9c3]"
                 >
                   Next word
                 </button>
@@ -252,17 +263,17 @@ export default function Home() {
                   );
                   event.dataTransfer.effectAllowed = "move";
                 }}
-                className="mt-4 cursor-grab rounded-lg border border-emerald-300 bg-emerald-50 p-4 shadow-sm transition hover:shadow-md active:cursor-grabbing"
+                className="mt-4 cursor-grab rounded-lg border border-[#e5e7eb] bg-[#f7f7f8] p-4 shadow-sm transition hover:shadow-md active:cursor-grabbing"
               >
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-emerald-700">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#0d0d0d]">
                       Spell it, then drag this card
                     </p>
                   </div>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-1 rounded-full bg-slate-900 px-2.5 py-1 text-xs font-semibold text-white shadow-sm transition hover:bg-slate-800 active:translate-y-[1px]"
+                    className="inline-flex items-center gap-1 rounded-full bg-[#0a0a0a] px-2.5 py-1 text-xs font-semibold text-white shadow-sm transition hover:bg-[#1a1a1a] active:translate-y-[1px]"
                     onClick={() => speak(readyWord.word, readyWord.sentence)}
                   >
                     <Volume2 className="h-4 w-4" aria-hidden />
@@ -276,7 +287,7 @@ export default function Home() {
                   onChange={(event) => handleType(event.target.value)}
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => event.preventDefault()}
-                  className="mt-2 w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-base font-semibold text-slate-900 shadow-sm focus:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-100"
+                  className="mt-2 w-full rounded-lg border border-[#e4ced5] bg-white px-3 py-2 text-base font-semibold text-[#0d0d0d] shadow-sm focus:border-[#a6192e] focus:outline-none focus:ring-2 focus:ring-[#f2cfd7]"
                   placeholder="Type what you hear"
                 />
                 <div className="mt-2 text-sm font-semibold">
@@ -301,7 +312,7 @@ export default function Home() {
           </section>
         )}
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+        <section className="rounded-2xl border border-[#e9d6dc] bg-white p-6 shadow-sm">
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3">
               <span className="text-sm text-slate-600">
@@ -312,7 +323,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setShowCheck(true)}
-                  className="inline-flex items-center gap-2 rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 active:translate-y-[1px]"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#0a0a0a] px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1a1a1a] active:translate-y-[1px]"
                 >
                   <CheckCircle2 className="h-4 w-4" aria-hidden />
                   Check groups
@@ -335,7 +346,7 @@ export default function Home() {
             {allBucketKeys.map((bucketKey) => (
               <div
                 key={bucketKey}
-                className={`rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition hover:shadow-md ${
+                className={`rounded-xl border border-[#e7d3da] bg-white p-3 shadow-sm transition hover:shadow-lg ${
                   bucketOrderClasses[bucketKey] ?? ""
                 }`}
                 onDragOver={(event) => event.preventDefault()}
@@ -350,10 +361,10 @@ export default function Home() {
               >
                 <div className="flex items-center justify-between pb-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    <span className="text-xs font-semibold uppercase tracking-[0.16em] text-[#8f1529]">
                       {bucketKey}
                     </span>
-                    <span className="rounded-full bg-slate-100 px-2 py-1 text-[11px] font-semibold text-slate-700">
+                    <span className="rounded-full bg-[#f7eef2] px-2 py-1 text-[11px] font-semibold text-[#8f1529]">
                       {buckets[bucketKey]?.length ?? 0}
                     </span>
                   </div>
@@ -390,14 +401,14 @@ export default function Home() {
                         <div className="flex items-center gap-2">
                           <button
                             type="button"
-                            className="inline-flex items-center gap-1 rounded-full bg-gray-200 px-2.5 py-1 text-xs font-semibold text-slate-700 shadow-sm transition hover:bg-slate-800 active:translate-y-[1px]"
+                            className="inline-flex items-center gap-1 rounded-full bg-[#f2cfd7] px-2.5 py-1 text-xs font-semibold text-[#8f1529] shadow-sm transition hover:bg-[#e7b9c3] active:translate-y-[1px]"
                             onClick={() => speak(entry.word.word, entry.word.sentence)}
                           >
                             <Volume2 className="h-4 w-4" aria-hidden />
                           </button>
                           <button
                             type="button"
-                            className="inline-flex items-center gap-1 rounded-full bg-gray-200 px-2.5 py-1 text-xs font-semibold text-slate-700 shadow-sm ring-1 ring-rose-200 transition hover:bg-rose-200 active:translate-y-[1px]"
+                            className="inline-flex items-center gap-1 rounded-full bg-[#f7eef2] px-2.5 py-1 text-xs font-semibold text-[#0d0d0d] shadow-sm ring-1 ring-[#f2cfd7] transition hover:bg-[#f2cfd7] active:translate-y-[1px]"
                             onClick={() => handleDeleteCard(bucketKey, entry)}
                           >
                             <Trash2 className="h-4 w-4" aria-hidden />
@@ -413,7 +424,7 @@ export default function Home() {
                     </article>
                   ))}
                   {!buckets[bucketKey]?.length && (
-                    <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-slate-200 bg-slate-50/70 p-4 text-sm text-slate-500">
+                    <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-[#e7d3da] bg-[#f9f0f3] p-4 text-sm text-[#7a0e1f]">
                       Drag a spelled card here
                     </div>
                   )}
@@ -423,24 +434,76 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h4 className="text-base font-semibold">Add a new week</h4>
-          <p className="mt-1 text-sm text-slate-600">
-            Open <code>src/data/spelling-lists.json</code> and add a new entry
-            with an <code>id</code>, <code>label</code>, <code>groups</code>,
-            and <code>words</code> array. Reload to pick it in the dropdown.
-          </p>
-          <div className="mt-3 rounded-lg bg-slate-50 p-3 text-xs font-mono text-slate-700">
-            {`{
-  "id": "sort-28",
-  "label": "Sort #28",
-  "groups": ["group-a", "group-b", "oddball"],
-  "words": [
-    { "word": "example", "sentence": "Use me in a sentence.", "group": "group-a" }
-  ]
-}`}
+        {showInfoModal ? (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
+            onClick={() => setShowInfoModal(false)}
+          >
+            <div
+              className="w-full max-w-xl rounded-2xl bg-white p-6 shadow-xl ring-1 ring-[#c7d9e8]"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-lg font-semibold text-[#1c4c72]">
+                    Add a new week
+                  </p>
+                  <p className="mt-1 text-sm text-slate-600">
+                    Update <code>src/data/spelling-lists.json</code> with your
+                    new list, then restart or rebuild to see it in the dropdown.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setShowInfoModal(false)}
+                  className="inline-flex items-center justify-center rounded-full border border-[#c7d9e8] bg-[#f5f9fd] px-2 py-1 text-sm font-semibold text-[#1c4c72] shadow-sm transition hover:border-[#b1c9de] hover:bg-[#e8f1f8] hover:text-[#173d5c] active:translate-y-[1px]"
+                >
+                  <span aria-hidden>X</span>
+                  <span className="sr-only">Close</span>
+                </button>
+              </div>
+              <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-slate-700">
+                <li>
+                  Each entry needs an <code>id</code>, <code>label</code>,{" "}
+                  <code>groups</code>, and <code>words</code> array. Words should
+                  include a <code>word</code>, <code>sentence</code>, and{" "}
+                  <code>group</code> that matches one of the bucket names.
+                </li>
+                <li>
+                  Contributing it back? Open a branch and Pull Request on
+                  GitHub. Full steps live in the{" "}
+                  <a
+                    href="https://github.com/kevinfosterNG/spelling-list#add-a-new-week"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-semibold text-[#1c4c72] hover:text-[#173d5c]"
+                  >
+                    README
+                  </a>
+                  .
+                </li>
+              </ul>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <a
+                  href="https://github.com/kevinfosterNG/spelling-list"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center rounded-lg border border-[#c7d9e8] bg-[#f5f9fd] px-3 py-2 text-sm font-semibold text-[#1c4c72] shadow-sm transition hover:border-[#b1c9de] hover:bg-[#e8f1f8] active:translate-y-[1px]"
+                >
+                  View on GitHub
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setShowInfoModal(false)}
+                  className="inline-flex items-center justify-center rounded-lg bg-[#1c4c72] px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#173d5c] active:translate-y-[1px]"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
           </div>
-        </section>
+        ) : null}
+
       </div>
     </main>
   );
