@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     env:
-      NODE_VERSION: "20.19.6"
+      NODE_VERSION: "22.11.0"
     steps:
       - uses: actions/checkout@v3
         with:
