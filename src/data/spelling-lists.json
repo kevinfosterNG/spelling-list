@@ -1,5 +1,127 @@
 [
   {
+    "id": "sort-28",
+    "label": "Sort #28 (er / ear / eer / ear / oddball)",
+    "groups": ["er=ûr sound", "ear=ēr sound", "eer=ēr sound", "ear=ûr sound", "oddball"],
+    "words": [
+      {
+        "word": "her",
+        "sentence": "Her backpack is on the chair.",
+        "group": "er=ûr sound"
+      },
+      {
+        "word": "herd",
+        "sentence": "A herd of cows grazed in the field.",
+        "group": "er=ûr sound"
+      },
+      {
+        "word": "germ",
+        "sentence": "Wash your hands to get rid of a germ.",
+        "group": "er=ûr sound"
+      },
+      {
+        "word": "fern",
+        "sentence": "A fern grew in the shady corner.",
+        "group": "er=ûr sound"
+      },
+      {
+        "word": "clerk",
+        "sentence": "The store clerk helped bag the groceries.",
+        "group": "er=ûr sound"
+      },
+      {
+        "word": "perch",
+        "sentence": "A bird found a perch on the fence.",
+        "group": "er=ûr sound"
+      },
+      {
+        "word": "earth",
+        "sentence": "The earth moves around the sun.",
+        "group": "ear=ēr sound"
+      },
+      {
+        "word": "heard",
+        "sentence": "I heard the bell ring.",
+        "group": "ear=ēr sound"
+      },
+      {
+        "word": "learn",
+        "sentence": "You can learn a new word every day.",
+        "group": "ear=ēr sound"
+      },
+      {
+        "word": "search",
+        "sentence": "Use a map to search for the trail.",
+        "group": "ear=ēr sound"
+      },
+      {
+        "word": "cheer",
+        "sentence": "The crowd will cheer for the team.",
+        "group": "eer=ēr sound"
+      },
+      {
+        "word": "steer",
+        "sentence": "You must steer the bike carefully.",
+        "group": "eer=ēr sound"
+      },
+      {
+        "word": "deer",
+        "sentence": "A deer crossed the quiet road.",
+        "group": "eer=ēr sound"
+      },
+      {
+        "word": "peer",
+        "sentence": "She asked her peer for help.",
+        "group": "eer=ēr sound"
+      },
+      {
+        "word": "fear",
+        "sentence": "He tried to face his fear of heights.",
+        "group": "ear=ûr sound"
+      },
+      {
+        "word": "spear",
+        "sentence": "The museum displayed an ancient spear.",
+        "group": "ear=ûr sound"
+      },
+      {
+        "word": "here",
+        "sentence": "Put your shoes here by the door.",
+        "group": "ear=ûr sound"
+      },
+      {
+        "word": "clear",
+        "sentence": "Make sure your desk is clear before lunch.",
+        "group": "ear=ûr sound"
+      },
+      {
+        "word": "year",
+        "sentence": "This year we will visit the zoo.",
+        "group": "ear=ûr sound"
+      },
+      {
+        "word": "dear",
+        "sentence": "She wrote a note to her dear friend.",
+        "group": "ear=ûr sound"
+      },
+      {
+        "word": "hear",
+        "sentence": "Can you hear the music outside?",
+        "group": "ear=ûr sound"
+      },
+      {
+        "word": "near",
+        "sentence": "The library is near the school.",
+        "group": "ear=ûr sound"
+      },
+      {
+        "word": "there",
+        "sentence": "Please sit over there by the window.",
+        "group": "oddball"
+      }
+    ]
+  },
+  {
     "id": "sort-27",
     "label": "Sort #27 (ar / air / are / oddball)",
     "groups": ["ar", "air", "are", "oddball"],
