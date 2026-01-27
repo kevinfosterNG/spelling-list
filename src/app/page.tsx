@@ -1,7 +1,7 @@
 "use client";
 
 import { CheckCircle2, Info, Trash2, Volume2 } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import spellingLists from "@/data/spelling-lists.json";
 
 type Word = {
@@ -71,6 +71,37 @@ export default function Home() {
   const [showCheck, setShowCheck] = useState(false);
   const [typedGuess, setTypedGuess] = useState("");
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const autoPlayTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [autoPlayState, setAutoPlayState] = useState<"idle" | "pending">("idle");
+
+  const clearAutoPlay = () => {
+    if (autoPlayTimeout.current) {
+      clearTimeout(autoPlayTimeout.current);
+      autoPlayTimeout.current = null;
+    }
+    setAutoPlayState("idle");
+  };
+
+  const queueAutoPlay = (word: Word | null) => {
+    clearAutoPlay();
+    if (!word) return;
+    setAutoPlayState("pending");
+    autoPlayTimeout.current = setTimeout(() => {
+      speak(word.word, word.sentence);
+      autoPlayTimeout.current = null;
+      setAutoPlayState("idle");
+    }, 1000);
+  };
+
+  useEffect(
+    () => () => {
+      if (autoPlayTimeout.current) {
+        clearTimeout(autoPlayTimeout.current);
+        autoPlayTimeout.current = null;
+      }
+    },
+    [],
+  );
 
   const currentWord = useMemo(() => {
     if (!activeList || !currentWordId) return null;
@@ -80,21 +111,25 @@ export default function Home() {
   }, [activeList, currentWordId]);
 
   const handleListChange = (nextId: string) => {
+    clearAutoPlay();
     setSelectedListId(nextId);
     const nextList = lists.find((entry) => entry.id === nextId) ?? null;
     setActiveList(nextList);
+    if (nextList) {
+      const nextWordIds = shuffle(nextList.words.map((entry) => entry.word));
+      setRemainingIds(nextWordIds);
+      setCurrentWordId(nextWordIds[0] ?? null);
+      setBuckets(buildBuckets(nextList));
+      setTypedGuess("");
+      setShowCheck(false);
+    } else {
+      setRemainingIds([]);
+      setCurrentWordId(null);
+      setBuckets({});
+      setTypedGuess("");
+      setShowCheck(false);
+    }
   };
-
-  useEffect(() => {
-    if (!activeList) return;
-    const nextWordIds = shuffle(activeList.words.map((entry) => entry.word));
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setRemainingIds(nextWordIds);
-    setCurrentWordId(nextWordIds[0] ?? null);
-    setBuckets(buildBuckets(activeList));
-    setTypedGuess("");
-    setShowCheck(false);
-  }, [activeList]);
 
   const allBucketKeys = activeList ? [...activeList.groups] : [];
 
@@ -103,6 +138,7 @@ export default function Home() {
     wordKey: string,
     spelling: string | undefined,
   ) => {
+    clearAutoPlay();
     const word = activeList?.words.find((entry) => entry.word === wordKey);
     if (!word) return;
 
@@ -127,10 +163,14 @@ export default function Home() {
       const nextCurrent = nextRemaining[0] ?? null;
       setCurrentWordId(nextCurrent);
       setTypedGuess("");
+      const nextWord =
+        activeList?.words.find((entry) => entry.word === nextCurrent) ?? null;
+      queueAutoPlay(nextWord);
     }
   };
 
   const nextPracticeWord = () => {
+    clearAutoPlay();
     if (!remainingIds.length) return;
     const shuffled = shuffle(remainingIds);
     const nextId = shuffled[0] ?? null;
@@ -144,6 +184,7 @@ export default function Home() {
   };
 
   const handleDeleteCard = (bucketKey: string, card: Card) => {
+    clearAutoPlay();
     setBuckets((prev) => {
       const next: Buckets = {};
       Object.entries(prev).forEach(([key, values]) => {
@@ -189,6 +230,7 @@ export default function Home() {
 
   const wordsLeft = remainingIds.length;
   const readyWord = currentWord;
+  const autoPlayPending = autoPlayState === "pending";
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#fff8fb] via-[#f3e2e8] to-[#e6f2ec] text-[#0d0d0d]">
@@ -273,10 +315,19 @@ export default function Home() {
                   </div>
                   <button
                     type="button"
-                    className="inline-flex items-center gap-1 rounded-full bg-[#0a0a0a] px-2.5 py-1 text-xs font-semibold text-white shadow-sm transition hover:bg-[#1a1a1a] active:translate-y-[1px]"
+                    className="relative inline-flex items-center gap-1 rounded-full bg-[#0a0a0a] px-2.5 py-1 text-xs font-semibold text-white shadow-sm transition hover:bg-[#1a1a1a] active:translate-y-[1px]"
                     onClick={() => speak(readyWord.word, readyWord.sentence)}
                   >
                     <Volume2 className="h-4 w-4" aria-hidden />
+                    {autoPlayPending && (
+                      <span
+                        className="absolute -right-2 -top-2 inline-flex h-3 w-3 items-center justify-center"
+                        aria-hidden
+                      >
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f2cfd7] opacity-80" />
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-[#a6192e]" />
+                      </span>
+                    )}
                   </button>
                 </div>
                 <input
