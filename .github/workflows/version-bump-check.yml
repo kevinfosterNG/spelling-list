@@ -1,0 +1,70 @@
+name: Enforce Package Version Bump
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - main
+
+jobs:
+  version_check:
+    name: Verify package.json version increased
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout PR commit
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read base and PR versions
+        id: versions
+        run: |
+          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+          git fetch origin "$BASE_BRANCH" --depth=1
+
+          BASE_VERSION=$(git show "origin/$BASE_BRANCH:package.json" | jq -r '.version')
+          PR_VERSION=$(jq -r '.version' package.json)
+
+          echo "base_version=$BASE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "pr_version=$PR_VERSION" >> "$GITHUB_OUTPUT"
+          echo "base_branch=$BASE_BRANCH" >> "$GITHUB_OUTPUT"
+
+      - name: Ensure version is bumped
+        run: |
+          node <<'NODE'
+          const base = process.env.BASE_VERSION;
+          const pr = process.env.PR_VERSION;
+          const baseBranch = process.env.BASE_BRANCH;
+
+          const parse = (v) => {
+            const match = /^([0-9]+)\.([0-9]+)\.([0-9]+)$/.exec(v || '');
+            if (!match) {
+              throw new Error(`Invalid semver format in package.json: "${v}". Use MAJOR.MINOR.PATCH.`);
+            }
+            return match.slice(1).map(Number);
+          };
+
+          const [bMaj, bMin, bPatch] = parse(base);
+          const [pMaj, pMin, pPatch] = parse(pr);
+
+          const isGreater =
+            pMaj > bMaj ||
+            (pMaj === bMaj && pMin > bMin) ||
+            (pMaj === bMaj && pMin === bMin && pPatch > bPatch);
+
+          if (!isGreater) {
+            throw new Error(`package.json version (${pr}) must be greater than ${base} on ${baseBranch}. Bump minor or patch before merging.`);
+          }
+
+          if (bMaj >= 1 && pMaj !== bMaj) {
+            throw new Error(`Major version changes are blocked for PRs to ${baseBranch}. Keep major ${bMaj} and bump minor/patch.`);
+          }
+
+          console.log(`Version check passed: base ${base} -> PR ${pr}`);
+          NODE
+        env:
+          BASE_VERSION: ${{ steps.versions.outputs.base_version }}
+          PR_VERSION: ${{ steps.versions.outputs.pr_version }}
+          BASE_BRANCH: ${{ steps.versions.outputs.base_branch }}

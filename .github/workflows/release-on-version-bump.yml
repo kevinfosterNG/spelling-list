@@ -1,0 +1,57 @@
+name: Release on Version Bump
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Tag and release if package version changed
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read package versions
+        id: versions
+        run: |
+          CURRENT=$(jq -r '.version' package.json)
+          PREVIOUS=$(git show HEAD^:package.json 2>/dev/null | jq -r '.version' 2>/dev/null || echo "")
+
+          echo "current=$CURRENT" >> "$GITHUB_OUTPUT"
+          echo "previous=$PREVIOUS" >> "$GITHUB_OUTPUT"
+
+          if [ "$CURRENT" = "$PREVIOUS" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Check tag availability
+        id: tagcheck
+        if: steps.versions.outputs.changed == 'true'
+        run: |
+          TAG="v${{ steps.versions.outputs.current }}"
+          git fetch --tags --force --quiet
+
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Tag $TAG already exists; skipping release." >&2
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub release
+        if: steps.versions.outputs.changed == 'true' && steps.tagcheck.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.versions.outputs.current }}
+          name: v${{ steps.versions.outputs.current }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
