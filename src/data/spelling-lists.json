@@ -1,5 +1,127 @@
 [
   {
+    "id": "sort-30",
+    "label": "Sort #30 (ir = ur / ire / oddball)",
+    "groups": ["ir = ur", "ire", "oddball"],
+    "words": [
+      {
+        "word": "girl",
+        "sentence": "The girl drew a picture of a tree.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "third",
+        "sentence": "He finished in third place during the race.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "bird",
+        "sentence": "A red bird sat on the fence.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "birth",
+        "sentence": "We celebrated the birth of a new puppy.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "shirt",
+        "sentence": "He spilled juice on his favorite shirt.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "fir",
+        "sentence": "The fir tree smelled fresh and sweet.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "whirl",
+        "sentence": "Leaves whirl in the autumn wind.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "swirl",
+        "sentence": "Stir the paint to make the colors swirl.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "thirst",
+        "sentence": "After soccer practice she felt a strong thirst.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "chirp",
+        "sentence": "I heard a robin chirp outside my window.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "skirt",
+        "sentence": "She wore a blue skirt to the play.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "twirl",
+        "sentence": "Dancers twirl across the stage.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "dirt",
+        "sentence": "The puppy rolled in the dirt.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "first",
+        "sentence": "Read the first page carefully.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "sir",
+        "sentence": "Yes, sir, I will be on time.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "firm",
+        "sentence": "The sand near the water was firm.",
+        "group": "ir = ur"
+      },
+      {
+        "word": "fire",
+        "sentence": "The fire kept us warm at night.",
+        "group": "ire"
+      },
+      {
+        "word": "tire",
+        "sentence": "The bike tire went flat on the trail.",
+        "group": "ire"
+      },
+      {
+        "word": "hire",
+        "sentence": "They plan to hire a new teacher this fall.",
+        "group": "ire"
+      },
+      {
+        "word": "spire",
+        "sentence": "The church spire rose high above the trees.",
+        "group": "ire"
+      },
+      {
+        "word": "wire",
+        "sentence": "A wire carried power to the lamp.",
+        "group": "ire"
+      },
+      {
+        "word": "fur",
+        "sentence": "The kitten's fur was soft to touch.",
+        "group": "oddball"
+      },
+      {
+        "word": "liar",
+        "sentence": "No one trusts a liar in the story.",
+        "group": "oddball"
+      }
+    ]
+  },
+  {
     "id": "sort-28",
     "label": "Sort #28 (er=ûr / ear=ēr / eer=ēr / ear=ûr / oddball)",
     "groups": ["er=ûr", "ear=ēr", "eer=ēr", "ear=ûr", "oddball"],
