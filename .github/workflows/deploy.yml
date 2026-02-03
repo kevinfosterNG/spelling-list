@@ -9,6 +9,9 @@ jobs:
   deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     env:
       NODE_VERSION: "20.20.0"
     steps:
