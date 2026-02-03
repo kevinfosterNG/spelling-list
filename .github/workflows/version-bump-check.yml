@@ -1,41 +1,43 @@
-name: Enforce Package Version Bump
+name: Manual Version Bump Check
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      base_branch:
+        description: "Branch to compare against (usually main)"
+        required: false
+        default: "main"
 
 jobs:
   version_check:
-    name: Verify package.json version increased
+    name: Verify package.json version is higher than base
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-      - name: Checkout PR commit
+      - name: Checkout selected ref
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Read base and PR versions
+      - name: Read base and current versions
         id: versions
         run: |
-          BASE_BRANCH="${{ github.event.pull_request.base.ref }}"
+          BASE_BRANCH="${{ inputs.base_branch }}"
           git fetch origin "$BASE_BRANCH" --depth=1
 
           BASE_VERSION=$(git show "origin/$BASE_BRANCH:package.json" | jq -r '.version')
-          PR_VERSION=$(jq -r '.version' package.json)
+          CUR_VERSION=$(jq -r '.version' package.json)
 
           echo "base_version=$BASE_VERSION" >> "$GITHUB_OUTPUT"
-          echo "pr_version=$PR_VERSION" >> "$GITHUB_OUTPUT"
+          echo "cur_version=$CUR_VERSION" >> "$GITHUB_OUTPUT"
           echo "base_branch=$BASE_BRANCH" >> "$GITHUB_OUTPUT"
 
       - name: Ensure version is bumped
         run: |
           node <<'NODE'
           const base = process.env.BASE_VERSION;
-          const pr = process.env.PR_VERSION;
+          const cur = process.env.CUR_VERSION;
           const baseBranch = process.env.BASE_BRANCH;
 
           const parse = (v) => {
@@ -47,7 +49,7 @@ jobs:
           };
 
           const [bMaj, bMin, bPatch] = parse(base);
-          const [pMaj, pMin, pPatch] = parse(pr);
+          const [pMaj, pMin, pPatch] = parse(cur);
 
           const isGreater =
             pMaj > bMaj ||
@@ -55,16 +57,16 @@ jobs:
             (pMaj === bMaj && pMin === bMin && pPatch > bPatch);
 
           if (!isGreater) {
-            throw new Error(`package.json version (${pr}) must be greater than ${base} on ${baseBranch}. Bump minor or patch before merging.`);
+            throw new Error(`package.json version (${cur}) must be greater than ${base} on ${baseBranch}. Bump minor or patch before releasing.`);
           }
 
           if (bMaj >= 1 && pMaj !== bMaj) {
-            throw new Error(`Major version changes are blocked for PRs to ${baseBranch}. Keep major ${bMaj} and bump minor/patch.`);
+            throw new Error(`Major version changes are blocked for releases against ${baseBranch}. Keep major ${bMaj} and bump minor/patch.`);
           }
 
-          console.log(`Version check passed: base ${base} -> PR ${pr}`);
+          console.log(`Version check passed: base ${base} -> current ${cur}`);
           NODE
         env:
           BASE_VERSION: ${{ steps.versions.outputs.base_version }}
-          PR_VERSION: ${{ steps.versions.outputs.pr_version }}
+          CUR_VERSION: ${{ steps.versions.outputs.cur_version }}
           BASE_BRANCH: ${{ steps.versions.outputs.base_branch }}
