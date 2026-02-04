@@ -1,0 +1,78 @@
+name: Manual Release Tag
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_ref:
+        description: "Branch to release from"
+        required: false
+        default: "main"
+      release_type:
+        description: "Version bump (patch|minor|major|prepatch|preminor|premajor|prerelease)"
+        required: false
+        default: "patch"
+      preid:
+        description: "Prerelease identifier (only used with pre* types, e.g., beta)"
+        required: false
+      custom_version:
+        description: "Explicit semver to set (overrides release_type)"
+        required: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout target ref
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.target_ref }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20
+
+      - name: Configure git identity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version and create tag
+        id: bump
+        env:
+          RELEASE_TYPE: ${{ inputs.release_type }}
+          PREID: ${{ inputs.preid }}
+          CUSTOM_VERSION: ${{ inputs.custom_version }}
+        run: |
+          set -euo pipefail
+
+          if [ -n "$CUSTOM_VERSION" ]; then
+            VERSION="$CUSTOM_VERSION"
+            npm version "$CUSTOM_VERSION" -m "chore(release): v%s"
+          else
+            if [[ "$RELEASE_TYPE" == pre* ]]; then
+              npm version "$RELEASE_TYPE" ${PREID:+--preid "$PREID"} -m "chore(release): v%s"
+            else
+              npm version "$RELEASE_TYPE" -m "chore(release): v%s"
+            fi
+            VERSION=$(node -pe "require('./package.json').version")
+          fi
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Push commit and tag
+        run: |
+          git push origin HEAD:${{ inputs.target_ref }}
+          git push origin --tags
+
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.bump.outputs.version }}
+          name: v${{ steps.bump.outputs.version }}
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

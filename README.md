@@ -36,3 +36,12 @@ Example entry:
 3. Add your list in `src/data/spelling-lists.json`, then run `npm test` (if present) or at least `npm run build` to ensure it exports cleanly.
 4. Commit and push: `git commit -am "Add week 28 list"` then `git push origin add-week-28`.
 5. Open a Pull Request to `main` on GitHub: https://github.com/kevinfosterNG/spelling-list/pulls and include a note about the new week you added.
+
+### Release process (admins)
+- PR checks run on every PR (including Dependabot and forks).
+- Deploys occur on pushes to `main` **or** tags matching `v*`.
+- To cut a release via GitHub UI: Actions → **Manual Release Tag** → Run workflow.
+  - `target_ref`: branch to release from (default `main`).
+  - `release_type`: `patch`/`minor`/`major` or a pre* variant; use `custom_version` to force a specific semver.
+  - Workflow bumps `package.json`/`package-lock.json`, commits, tags `v<version>`, publishes a GitHub Release, and the tag triggers the Azure Static Web Apps deploy.
+- If branch protection blocks pushes from Actions, an admin can do it locally instead: `git checkout main && git pull && npm version patch -m "chore(release): v%s" && git push && git push --tags`.
