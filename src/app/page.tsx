@@ -3,6 +3,7 @@
 import { CheckCircle2, Info, Trash2, Volume2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import spellingLists from "@/data/spelling-lists.json";
+import { aggregateStats } from "@/lib/stats";
 
 type Word = {
   word: string;
@@ -71,6 +72,7 @@ export default function Home() {
   const [showCheck, setShowCheck] = useState(false);
   const [typedGuess, setTypedGuess] = useState("");
   const [showInfoModal, setShowInfoModal] = useState(false);
+  const [attempts, setAttempts] = useState(0);
   const autoPlayTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [autoPlayState, setAutoPlayState] = useState<"idle" | "pending">("idle");
 
@@ -122,12 +124,14 @@ export default function Home() {
       setBuckets(buildBuckets(nextList));
       setTypedGuess("");
       setShowCheck(false);
+      setAttempts(0);
     } else {
       setRemainingIds([]);
       setCurrentWordId(null);
       setBuckets({});
       setTypedGuess("");
       setShowCheck(false);
+      setAttempts(0);
     }
   };
 
@@ -156,6 +160,7 @@ export default function Home() {
       return next;
     });
     setShowCheck(false);
+    setAttempts((prev) => prev + 1);
 
     if (remainingIds.includes(word.word)) {
       const nextRemaining = remainingIds.filter((id) => id !== word.word);
@@ -218,6 +223,16 @@ export default function Home() {
     return "border-rose-400 bg-rose-100 text-rose-900";
   };
 
+  const totalWords = activeList?.words.length ?? 0;
+  const { percentCorrect, correctCount } = useMemo(
+    () => aggregateStats(buckets, totalWords),
+    [buckets, totalWords],
+  );
+  const wordsLeft = remainingIds.length;
+  const readyWord = currentWord;
+  const autoPlayPending = autoPlayState === "pending";
+  const showAPlus = percentCorrect === 100 && wordsLeft === 0 && totalWords > 0;
+
   if (!activeList) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-slate-50">
@@ -227,10 +242,6 @@ export default function Home() {
       </main>
     );
   }
-
-  const wordsLeft = remainingIds.length;
-  const readyWord = currentWord;
-  const autoPlayPending = autoPlayState === "pending";
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-[#fff8fb] via-[#f3e2e8] to-[#e6f2ec] text-[#0d0d0d]">
@@ -264,6 +275,48 @@ export default function Home() {
                 <Info className="h-4 w-4 text-[#1c4c72]" aria-hidden />
                 <span className="sr-only">How to add a new week</span>
               </button>
+            </div>
+          </div>
+          {showAPlus && (
+            <div className="rounded-2xl bg-gradient-to-r from-[#ff7aa2] via-[#ffafcc] to-[#a6192e] p-[1px] shadow-lg transition">
+              <div className="flex items-center gap-4 rounded-[14px] bg-[#0d0d0d] px-4 py-3 text-white">
+                <span className="text-5xl font-black leading-none drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
+                  A+
+                </span>
+                <div className="leading-tight">
+                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#ffdde9]">
+                    Perfect!
+                  </p>
+                  <p className="text-base font-semibold text-white">
+                    Every word spelled and sorted correctly.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-[#e9d6dc] bg-white px-4 py-3 shadow-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a6192e]">
+                Attempts
+              </p>
+              <p className="mt-1 text-3xl font-black text-[#0d0d0d]">{attempts}</p>
+              <p className="text-xs text-slate-600">Drops you&apos;ve made so far</p>
+            </div>
+            <div className="rounded-xl border border-[#e9d6dc] bg-white px-4 py-3 shadow-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1c4c72]">
+                Percent correct
+              </p>
+              <div className="mt-1 flex items-baseline gap-2">
+                <p className="text-3xl font-black text-[#0d0d0d]">
+                  {percentCorrect}%
+                </p>
+                <span className="text-xs font-semibold text-slate-600">
+                  {correctCount} of {totalWords || 0} words right
+                </span>
+              </div>
+              <p className="text-xs text-slate-600">
+                Based on the words currently placed
+              </p>
             </div>
           </div>
         </header>
