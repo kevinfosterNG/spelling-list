@@ -4,6 +4,7 @@ import { CheckCircle2, Info, Trash2, Volume2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import spellingLists from "@/data/spelling-lists.json";
 import { aggregateStats } from "@/lib/stats";
+import { shuffle } from "@/lib/shuffle";
 
 type Word = {
   word: string;
@@ -46,15 +47,6 @@ const bucketOrderClasses: Record<string, string> = {};
 
 const lists: SpellingList[] = spellingLists;
 const firstList = lists[0] ?? null;
-const shuffle = <T,>(items: T[]): T[] => {
-  const copy = [...items];
-  for (let i = copy.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-};
-
 const initialWordIds = firstList ? firstList.words.map((entry) => entry.word) : [];
 
 export default function Home() {
@@ -80,6 +72,9 @@ export default function Home() {
   } | null>(null);
   const autoPlayTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [autoPlayState, setAutoPlayState] = useState<"idle" | "pending">("idle");
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const hasShuffledInitially = useRef(false);
+  const [isReady, setIsReady] = useState(false);
 
   const clearAutoPlay = () => {
     if (autoPlayTimeout.current) {
@@ -117,11 +112,24 @@ export default function Home() {
     );
   }, [activeList, currentWordId]);
 
+  useEffect(() => {
+    if (hasShuffledInitially.current || !activeList) return;
+    const shuffled = shuffle(activeList.words.map((entry) => entry.word));
+    // This runs once after hydration to avoid SSR randomness while keeping initial client order random.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRemainingIds(shuffled);
+    setCurrentWordId(shuffled[0] ?? null);
+    hasShuffledInitially.current = true;
+    setIsReady(true);
+  }, [activeList]);
+
   const handleListChange = (nextId: string) => {
     clearAutoPlay();
     setSelectedListId(nextId);
     const nextList = lists.find((entry) => entry.id === nextId) ?? null;
     setActiveList(nextList);
+    hasShuffledInitially.current = false;
+    setIsReady(false);
     if (nextList) {
       const nextWordIds = shuffle(nextList.words.map((entry) => entry.word));
       setRemainingIds(nextWordIds);
@@ -168,6 +176,7 @@ export default function Home() {
     });
     setShowCheck(false);
     setLastStats(null);
+    inputRef.current?.focus();
 
     if (remainingIds.includes(word.word)) {
       const nextRemaining = remainingIds.filter((id) => id !== word.word);
@@ -206,6 +215,7 @@ export default function Home() {
     });
     setShowCheck(false);
     setLastStats(null);
+    inputRef.current?.focus();
 
     setTypedGuess(card.spelling);
     setCurrentWordId(card.word.word);
@@ -233,7 +243,7 @@ export default function Home() {
 
   const totalWords = activeList?.words.length ?? 0;
   const wordsLeft = remainingIds.length;
-  const readyWord = currentWord;
+  const readyWord = isReady ? currentWord : null;
   const autoPlayPending = autoPlayState === "pending";
   const showAPlus = Boolean(
     lastStats &&
@@ -345,7 +355,7 @@ export default function Home() {
           ) : null}
         </header>
 
-        {(wordsLeft > 0 || readyWord) && (
+        {isReady && (wordsLeft > 0 || readyWord) && (
           <section className="rounded-2xl border border-[#e9d6dc] bg-white p-6 shadow-sm">
             <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <div className="flex items-center gap-2">
@@ -412,6 +422,7 @@ export default function Home() {
                   value={typedGuess}
                   spellCheck={false}
                   autoComplete="off"
+                  ref={inputRef}
                   onChange={(event) => handleType(event.target.value)}
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => event.preventDefault()}
