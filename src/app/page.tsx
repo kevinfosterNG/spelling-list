@@ -4,6 +4,7 @@ import { CheckCircle2, Info, Trash2, Volume2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import spellingLists from "@/data/spelling-lists.json";
 import { aggregateStats } from "@/lib/stats";
+import { shuffle } from "@/lib/shuffle";
 
 type Word = {
   word: string;
@@ -46,15 +47,6 @@ const bucketOrderClasses: Record<string, string> = {};
 
 const lists: SpellingList[] = spellingLists;
 const firstList = lists[0] ?? null;
-const shuffle = <T,>(items: T[]): T[] => {
-  const copy = [...items];
-  for (let i = copy.length - 1; i > 0; i -= 1) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-  return copy;
-};
-
 const initialWordIds = firstList ? firstList.words.map((entry) => entry.word) : [];
 
 export default function Home() {
