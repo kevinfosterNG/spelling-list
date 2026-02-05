@@ -74,6 +74,7 @@ export default function Home() {
   const [autoPlayState, setAutoPlayState] = useState<"idle" | "pending">("idle");
   const inputRef = useRef<HTMLInputElement | null>(null);
   const hasShuffledInitially = useRef(false);
+  const [isReady, setIsReady] = useState(false);
 
   const clearAutoPlay = () => {
     if (autoPlayTimeout.current) {
@@ -119,6 +120,7 @@ export default function Home() {
     setRemainingIds(shuffled);
     setCurrentWordId(shuffled[0] ?? null);
     hasShuffledInitially.current = true;
+    setIsReady(true);
   }, [activeList]);
 
   const handleListChange = (nextId: string) => {
@@ -126,6 +128,8 @@ export default function Home() {
     setSelectedListId(nextId);
     const nextList = lists.find((entry) => entry.id === nextId) ?? null;
     setActiveList(nextList);
+    hasShuffledInitially.current = false;
+    setIsReady(false);
     if (nextList) {
       const nextWordIds = shuffle(nextList.words.map((entry) => entry.word));
       setRemainingIds(nextWordIds);
@@ -239,7 +243,7 @@ export default function Home() {
 
   const totalWords = activeList?.words.length ?? 0;
   const wordsLeft = remainingIds.length;
-  const readyWord = currentWord;
+  const readyWord = isReady ? currentWord : null;
   const autoPlayPending = autoPlayState === "pending";
   const showAPlus = Boolean(
     lastStats &&
@@ -351,7 +355,7 @@ export default function Home() {
           ) : null}
         </header>
 
-        {(wordsLeft > 0 || readyWord) && (
+        {isReady && (wordsLeft > 0 || readyWord) && (
           <section className="rounded-2xl border border-[#e9d6dc] bg-white p-6 shadow-sm">
             <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <div className="flex items-center gap-2">
