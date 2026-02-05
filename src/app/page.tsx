@@ -48,15 +48,14 @@ const bucketOrderClasses: Record<string, string> = {};
 const lists: SpellingList[] = spellingLists;
 const firstList = lists[0] ?? null;
 const initialWordIds = firstList ? firstList.words.map((entry) => entry.word) : [];
-const initialSeededRandom = createSeededRandom(
-  seedFromString(firstList?.id ?? "default-list"),
-);
 
 export default function Home() {
+  const seed = firstList?.id ?? "default-list";
   const initialShuffledIds = useMemo(() => {
     if (!firstList) return [];
-    return shuffle(initialWordIds, initialSeededRandom);
-  }, []);
+    const seededRandom = createSeededRandom(seedFromString(seed));
+    return shuffle(initialWordIds, seededRandom);
+  }, [seed]);
   const [selectedListId, setSelectedListId] = useState<string>(
     firstList?.id ?? "",
   );
