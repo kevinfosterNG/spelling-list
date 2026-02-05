@@ -76,6 +76,7 @@ export default function Home() {
   } | null>(null);
   const autoPlayTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [autoPlayState, setAutoPlayState] = useState<"idle" | "pending">("idle");
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const clearAutoPlay = () => {
     if (autoPlayTimeout.current) {
@@ -164,6 +165,7 @@ export default function Home() {
     });
     setShowCheck(false);
     setLastStats(null);
+    inputRef.current?.focus();
 
     if (remainingIds.includes(word.word)) {
       const nextRemaining = remainingIds.filter((id) => id !== word.word);
@@ -202,6 +204,7 @@ export default function Home() {
     });
     setShowCheck(false);
     setLastStats(null);
+    inputRef.current?.focus();
 
     setTypedGuess(card.spelling);
     setCurrentWordId(card.word.word);
@@ -408,6 +411,7 @@ export default function Home() {
                   value={typedGuess}
                   spellCheck={false}
                   autoComplete="off"
+                  ref={inputRef}
                   onChange={(event) => handleType(event.target.value)}
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => event.preventDefault()}
