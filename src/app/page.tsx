@@ -4,7 +4,7 @@ import { CheckCircle2, Info, Trash2, Volume2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import spellingLists from "@/data/spelling-lists.json";
 import { aggregateStats } from "@/lib/stats";
-import { createSeededRandom, shuffle } from "@/lib/shuffle";
+import { shuffle } from "@/lib/shuffle";
 
 type Word = {
   word: string;
@@ -50,12 +50,6 @@ const firstList = lists[0] ?? null;
 const initialWordIds = firstList ? firstList.words.map((entry) => entry.word) : [];
 
 export default function Home() {
-  const [initialSeed] = useState(() => Math.floor(Math.random() * 1_000_000_000));
-  const initialShuffledIds = useMemo(() => {
-    if (!firstList) return [];
-    const seededRandom = createSeededRandom(initialSeed);
-    return shuffle(initialWordIds, seededRandom);
-  }, [initialSeed]);
   const [selectedListId, setSelectedListId] = useState<string>(
     firstList?.id ?? "",
   );
@@ -63,9 +57,9 @@ export default function Home() {
   const [buckets, setBuckets] = useState<Buckets>(() =>
     firstList ? buildBuckets(firstList) : {},
   );
-  const [remainingIds, setRemainingIds] = useState<string[]>(initialShuffledIds);
+  const [remainingIds, setRemainingIds] = useState<string[]>(initialWordIds);
   const [currentWordId, setCurrentWordId] = useState<string | null>(
-    initialShuffledIds[0] ?? null,
+    initialWordIds[0] ?? null,
   );
   const [showCheck, setShowCheck] = useState(false);
   const [typedGuess, setTypedGuess] = useState("");
@@ -79,6 +73,7 @@ export default function Home() {
   const autoPlayTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [autoPlayState, setAutoPlayState] = useState<"idle" | "pending">("idle");
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const hasShuffledInitially = useRef(false);
 
   const clearAutoPlay = () => {
     if (autoPlayTimeout.current) {
@@ -115,6 +110,16 @@ export default function Home() {
       activeList.words.find((entry) => entry.word === currentWordId) ?? null
     );
   }, [activeList, currentWordId]);
+
+  useEffect(() => {
+    if (hasShuffledInitially.current || !activeList) return;
+    const shuffled = shuffle(activeList.words.map((entry) => entry.word));
+    // This runs once after hydration to avoid SSR randomness while keeping initial client order random.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setRemainingIds(shuffled);
+    setCurrentWordId(shuffled[0] ?? null);
+    hasShuffledInitially.current = true;
+  }, [activeList]);
 
   const handleListChange = (nextId: string) => {
     clearAutoPlay();
