@@ -295,12 +295,15 @@ export default function Home() {
             </div>
           </div>
           {showAPlus && (
-            <div className="rounded-2xl bg-gradient-to-r from-[#ff7aa2] via-[#ffafcc] to-[#a6192e] p-[1px] shadow-lg transition">
-              <div className="flex items-center gap-4 rounded-[14px] bg-[#0d0d0d] px-4 py-3 text-white">
-                <span className="text-5xl font-black leading-none drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
+            <div className="rainbow-border rounded-2xl p-[2px] shadow-lg transition">
+              <div className="relative flex items-center gap-4 overflow-hidden rounded-[14px] bg-[#0d0d0d] px-5 py-4 text-white">
+                <div className="absolute inset-0 opacity-25 mix-blend-screen">
+                  <div className="h-full w-full animate-pulse bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.12),transparent_35%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.1),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(255,255,255,0.08),transparent_35%)]" />
+                </div>
+                <span className="relative text-5xl font-black leading-none rainbow-text drop-shadow-[0_8px_22px_rgba(0,0,0,0.45)]">
                   A+
                 </span>
-                <div className="leading-tight">
+                <div className="relative leading-tight">
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#ffdde9]">
                     Perfect!
                   </p>
