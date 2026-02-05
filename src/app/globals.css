@@ -56,6 +56,33 @@ body {
   animation: rainbow-shift 6s linear infinite;
 }
 
+.rainbow-panel {
+  position: relative;
+  background: linear-gradient(
+    120deg,
+    #ff7aa2,
+    #ffd166,
+    #6decb9,
+    #6ea8ff,
+    #d68bff,
+    #ff7aa2
+  );
+  background-size: 320% 320%;
+  animation: rainbow-shift 8s linear infinite;
+  overflow: hidden;
+}
+
+.rainbow-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 35%),
+    radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.16), transparent 32%),
+    radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.12), transparent 40%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
 .rainbow-text {
   background: linear-gradient(
     120deg,

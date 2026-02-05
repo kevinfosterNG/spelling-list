@@ -296,10 +296,7 @@ export default function Home() {
           </div>
           {showAPlus && (
             <div className="rainbow-border rounded-2xl p-[2px] shadow-lg transition">
-              <div className="relative flex items-center gap-4 overflow-hidden rounded-[14px] bg-[#0d0d0d] px-5 py-4 text-white">
-                <div className="absolute inset-0 opacity-25 mix-blend-screen">
-                  <div className="h-full w-full animate-pulse bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.12),transparent_35%),radial-gradient(circle_at_80%_30%,rgba(255,255,255,0.1),transparent_30%),radial-gradient(circle_at_50%_80%,rgba(255,255,255,0.08),transparent_35%)]" />
-                </div>
+              <div className="rainbow-panel relative flex items-center gap-4 rounded-[14px] px-5 py-4 text-white shadow-[0_12px_38px_rgba(0,0,0,0.25)]">
                 <span className="relative text-5xl font-black leading-none rainbow-text drop-shadow-[0_8px_22px_rgba(0,0,0,0.45)]">
                   A+
                 </span>
