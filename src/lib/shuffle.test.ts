@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import spellingLists from "../data/spelling-lists.json";
-import { shuffle } from "./shuffle";
+import { createSeededRandom, seedFromString, shuffle } from "./shuffle";
 
 describe("shuffle", () => {
   it("returns a different order when random values favor early swaps", () => {
@@ -31,5 +31,17 @@ describe("shuffle", () => {
       "Initial shuffled order should differ from JSON order",
     );
   });
-});
 
+  it("produces the same order with the same seed across renders", () => {
+    const list = ["alpha", "beta", "gamma", "delta", "epsilon"];
+    const seed = seedFromString("week-1");
+    const rngA = createSeededRandom(seed);
+    const rngB = createSeededRandom(seed);
+
+    const firstShuffle = shuffle(list, rngA);
+    const secondShuffle = shuffle(list, rngB);
+
+    assert.deepEqual(firstShuffle, secondShuffle);
+    assert.notDeepEqual(firstShuffle, list);
+  });
+});
