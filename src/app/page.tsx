@@ -58,6 +58,10 @@ const shuffle = <T,>(items: T[]): T[] => {
 const initialWordIds = firstList ? firstList.words.map((entry) => entry.word) : [];
 
 export default function Home() {
+  const initialShuffledIds = useMemo(() => {
+    if (!firstList) return [];
+    return shuffle(initialWordIds);
+  }, []);
   const [selectedListId, setSelectedListId] = useState<string>(
     firstList?.id ?? "",
   );
@@ -65,9 +69,9 @@ export default function Home() {
   const [buckets, setBuckets] = useState<Buckets>(() =>
     firstList ? buildBuckets(firstList) : {},
   );
-  const [remainingIds, setRemainingIds] = useState<string[]>(initialWordIds);
+  const [remainingIds, setRemainingIds] = useState<string[]>(initialShuffledIds);
   const [currentWordId, setCurrentWordId] = useState<string | null>(
-    initialWordIds[0] ?? null,
+    initialShuffledIds[0] ?? null,
   );
   const [showCheck, setShowCheck] = useState(false);
   const [typedGuess, setTypedGuess] = useState("");
