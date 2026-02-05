@@ -4,7 +4,7 @@ import { CheckCircle2, Info, Trash2, Volume2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import spellingLists from "@/data/spelling-lists.json";
 import { aggregateStats } from "@/lib/stats";
-import { createSeededRandom, seedFromString, shuffle } from "@/lib/shuffle";
+import { createSeededRandom, shuffle } from "@/lib/shuffle";
 
 type Word = {
   word: string;
@@ -50,12 +50,12 @@ const firstList = lists[0] ?? null;
 const initialWordIds = firstList ? firstList.words.map((entry) => entry.word) : [];
 
 export default function Home() {
-  const seed = firstList?.id ?? "default-list";
+  const [initialSeed] = useState(() => Math.floor(Math.random() * 1_000_000_000));
   const initialShuffledIds = useMemo(() => {
     if (!firstList) return [];
-    const seededRandom = createSeededRandom(seedFromString(seed));
+    const seededRandom = createSeededRandom(initialSeed);
     return shuffle(initialWordIds, seededRandom);
-  }, [seed]);
+  }, [initialSeed]);
   const [selectedListId, setSelectedListId] = useState<string>(
     firstList?.id ?? "",
   );
