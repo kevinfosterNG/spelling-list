@@ -72,7 +72,12 @@ export default function Home() {
   const [showCheck, setShowCheck] = useState(false);
   const [typedGuess, setTypedGuess] = useState("");
   const [showInfoModal, setShowInfoModal] = useState(false);
-  const [attempts, setAttempts] = useState(0);
+  const [checkCount, setCheckCount] = useState(0);
+  const [lastStats, setLastStats] = useState<{
+    percentCorrect: number;
+    correctCount: number;
+    totalWords: number;
+  } | null>(null);
   const autoPlayTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [autoPlayState, setAutoPlayState] = useState<"idle" | "pending">("idle");
 
@@ -124,14 +129,16 @@ export default function Home() {
       setBuckets(buildBuckets(nextList));
       setTypedGuess("");
       setShowCheck(false);
-      setAttempts(0);
+      setCheckCount(0);
+      setLastStats(null);
     } else {
       setRemainingIds([]);
       setCurrentWordId(null);
       setBuckets({});
       setTypedGuess("");
       setShowCheck(false);
-      setAttempts(0);
+      setCheckCount(0);
+      setLastStats(null);
     }
   };
 
@@ -160,7 +167,7 @@ export default function Home() {
       return next;
     });
     setShowCheck(false);
-    setAttempts((prev) => prev + 1);
+    setLastStats(null);
 
     if (remainingIds.includes(word.word)) {
       const nextRemaining = remainingIds.filter((id) => id !== word.word);
@@ -198,6 +205,7 @@ export default function Home() {
       return next;
     });
     setShowCheck(false);
+    setLastStats(null);
 
     setTypedGuess(card.spelling);
     setCurrentWordId(card.word.word);
@@ -224,14 +232,23 @@ export default function Home() {
   };
 
   const totalWords = activeList?.words.length ?? 0;
-  const { percentCorrect, correctCount } = useMemo(
-    () => aggregateStats(buckets, totalWords),
-    [buckets, totalWords],
-  );
   const wordsLeft = remainingIds.length;
   const readyWord = currentWord;
   const autoPlayPending = autoPlayState === "pending";
-  const showAPlus = percentCorrect === 100 && wordsLeft === 0 && totalWords > 0;
+  const showAPlus = Boolean(
+    lastStats &&
+      lastStats.percentCorrect === 100 &&
+      wordsLeft === 0 &&
+      totalWords > 0 &&
+      showCheck,
+  );
+
+  const handleCheckGroups = () => {
+    const stats = aggregateStats(buckets, totalWords);
+    setLastStats({ ...stats, totalWords });
+    setCheckCount((prev) => prev + 1);
+    setShowCheck(true);
+  };
 
   if (!activeList) {
     return (
@@ -278,12 +295,12 @@ export default function Home() {
             </div>
           </div>
           {showAPlus && (
-            <div className="rounded-2xl bg-gradient-to-r from-[#ff7aa2] via-[#ffafcc] to-[#a6192e] p-[1px] shadow-lg transition">
-              <div className="flex items-center gap-4 rounded-[14px] bg-[#0d0d0d] px-4 py-3 text-white">
-                <span className="text-5xl font-black leading-none drop-shadow-[0_8px_18px_rgba(0,0,0,0.35)]">
+            <div className="rainbow-border rounded-2xl p-[2px] shadow-lg transition">
+              <div className="rainbow-panel relative flex items-center gap-4 rounded-[14px] px-5 py-4 text-white shadow-[0_12px_38px_rgba(0,0,0,0.25)]">
+                <span className="relative text-5xl font-black leading-none rainbow-text drop-shadow-[0_8px_22px_rgba(0,0,0,0.45)]">
                   A+
                 </span>
-                <div className="leading-tight">
+                <div className="relative leading-tight">
                   <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#ffdde9]">
                     Perfect!
                   </p>
@@ -294,31 +311,38 @@ export default function Home() {
               </div>
             </div>
           )}
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div className="rounded-xl border border-[#e9d6dc] bg-white px-4 py-3 shadow-sm">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a6192e]">
-                Attempts
-              </p>
-              <p className="mt-1 text-3xl font-black text-[#0d0d0d]">{attempts}</p>
-              <p className="text-xs text-slate-600">Drops you&apos;ve made so far</p>
-            </div>
-            <div className="rounded-xl border border-[#e9d6dc] bg-white px-4 py-3 shadow-sm">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1c4c72]">
-                Percent correct
-              </p>
-              <div className="mt-1 flex items-baseline gap-2">
-                <p className="text-3xl font-black text-[#0d0d0d]">
-                  {percentCorrect}%
+          {wordsLeft === 0 && lastStats && showCheck ? (
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="rounded-xl border border-[#e9d6dc] bg-white px-4 py-3 shadow-sm">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#a6192e]">
+                  Attempts
                 </p>
-                <span className="text-xs font-semibold text-slate-600">
-                  {correctCount} of {totalWords || 0} words right
-                </span>
+                <p className="mt-1 text-3xl font-black text-[#0d0d0d]">
+                  {checkCount}
+                </p>
+                <p className="text-xs text-slate-600">
+                  Times you&apos;ve checked the groups
+                </p>
               </div>
-              <p className="text-xs text-slate-600">
-                Based on the words currently placed
-              </p>
+              <div className="rounded-xl border border-[#e9d6dc] bg-white px-4 py-3 shadow-sm">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#1c4c72]">
+                  Percent correct
+                </p>
+                <div className="mt-1 flex items-baseline gap-2">
+                  <p className="text-3xl font-black text-[#0d0d0d]">
+                    {lastStats.percentCorrect}%
+                  </p>
+                  <span className="text-xs font-semibold text-slate-600">
+                    {lastStats.correctCount} of {lastStats.totalWords || 0} words
+                    right
+                  </span>
+                </div>
+                <p className="text-xs text-slate-600">
+                  Snapshot from your last check
+                </p>
+              </div>
             </div>
-          </div>
+          ) : null}
         </header>
 
         {(wordsLeft > 0 || readyWord) && (
@@ -426,7 +450,7 @@ export default function Home() {
               {wordsLeft === 0 && (
                 <button
                   type="button"
-                  onClick={() => setShowCheck(true)}
+                  onClick={handleCheckGroups}
                   className="inline-flex items-center gap-2 rounded-lg bg-[#0a0a0a] px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#1a1a1a] active:translate-y-[1px]"
                 >
                   <CheckCircle2 className="h-4 w-4" aria-hidden />
