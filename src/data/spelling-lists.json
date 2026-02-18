@@ -1,5 +1,127 @@
 [
   {
+    "id": "sort-31",
+    "label": "Sort #31 (or / ore / oar / our / oddballs)",
+    "groups": ["or", "ore", "oar", "our", "oddballs"],
+    "words": [
+      {
+        "word": "form",
+        "sentence": "Please form a line by the door.",
+        "group": "or"
+      },
+      {
+        "word": "north",
+        "sentence": "We drove north to reach the lake.",
+        "group": "or"
+      },
+      {
+        "word": "thorn",
+        "sentence": "A thorn poked his finger.",
+        "group": "or"
+      },
+      {
+        "word": "pork",
+        "sentence": "We ate pork for dinner.",
+        "group": "or"
+      },
+      {
+        "word": "fort",
+        "sentence": "The fort stood on the hill.",
+        "group": "or"
+      },
+      {
+        "word": "storm",
+        "sentence": "The storm passed before dusk.",
+        "group": "or"
+      },
+      {
+        "word": "more",
+        "sentence": "May I have more water, please?",
+        "group": "ore"
+      },
+      {
+        "word": "store",
+        "sentence": "We stopped at the store for milk.",
+        "group": "ore"
+      },
+      {
+        "word": "shore",
+        "sentence": "Shells lined the shore.",
+        "group": "ore"
+      },
+      {
+        "word": "tore",
+        "sentence": "He tore the paper in half.",
+        "group": "ore"
+      },
+      {
+        "word": "wore",
+        "sentence": "She wore a red hat.",
+        "group": "ore"
+      },
+      {
+        "word": "sore",
+        "sentence": "My legs were sore after the hike.",
+        "group": "ore"
+      },
+      {
+        "word": "board",
+        "sentence": "He wrote the answer on the board.",
+        "group": "oar"
+      },
+      {
+        "word": "roar",
+        "sentence": "We heard the lion roar.",
+        "group": "oar"
+      },
+      {
+        "word": "boar",
+        "sentence": "A boar ran into the woods.",
+        "group": "oar"
+      },
+      {
+        "word": "soar",
+        "sentence": "Eagles soar above the cliffs.",
+        "group": "oar"
+      },
+      {
+        "word": "your",
+        "sentence": "Is this your backpack?",
+        "group": "our"
+      },
+      {
+        "word": "four",
+        "sentence": "I have four crayons.",
+        "group": "our"
+      },
+      {
+        "word": "court",
+        "sentence": "The court was ready for the game.",
+        "group": "our"
+      },
+      {
+        "word": "fourth",
+        "sentence": "He finished in fourth place.",
+        "group": "our"
+      },
+      {
+        "word": "pour",
+        "sentence": "Please pour the juice carefully.",
+        "group": "our"
+      },
+      {
+        "word": "hour",
+        "sentence": "An hour passed quickly.",
+        "group": "oddballs"
+      },
+      {
+        "word": "word",
+        "sentence": "That word is hard to spell.",
+        "group": "oddballs"
+      }
+    ]
+  },
+  {
     "id": "sort-30",
     "label": "Sort #30 (ir = ur / ire / oddball)",
     "groups": ["ir = ur", "ire", "oddball"],
