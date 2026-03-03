@@ -1,5 +1,127 @@
 [
   {
+    "id": "sort-32",
+    "label": "Sort #32 (ur / ure / ur_e / oddball)",
+    "groups": ["ur", "ure", "ur_e", "oddball"],
+    "words": [
+      {
+        "word": "turn",
+        "sentence": "Please turn the page quietly.",
+        "group": "ur"
+      },
+      {
+        "word": "burn",
+        "sentence": "Be careful not to burn your hand.",
+        "group": "ur"
+      },
+      {
+        "word": "hurt",
+        "sentence": "I hurt my knee at recess.",
+        "group": "ur"
+      },
+      {
+        "word": "curl",
+        "sentence": "Curl the ribbon with the scissors.",
+        "group": "ur"
+      },
+      {
+        "word": "churn",
+        "sentence": "They churn cream to make butter.",
+        "group": "ur"
+      },
+      {
+        "word": "hurl",
+        "sentence": "Do not hurl rocks near the road.",
+        "group": "ur"
+      },
+      {
+        "word": "burst",
+        "sentence": "The balloon may burst if you overfill it.",
+        "group": "ur"
+      },
+      {
+        "word": "church",
+        "sentence": "The church bell rang at noon.",
+        "group": "ur"
+      },
+      {
+        "word": "surf",
+        "sentence": "We watched surfers ride the surf.",
+        "group": "ur"
+      },
+      {
+        "word": "purr",
+        "sentence": "The kitten will purr when it is happy.",
+        "group": "ur"
+      },
+      {
+        "word": "curb",
+        "sentence": "Stop at the curb before crossing.",
+        "group": "ur"
+      },
+      {
+        "word": "blurt",
+        "sentence": "Try not to blurt out the answer.",
+        "group": "ur"
+      },
+      {
+        "word": "sure",
+        "sentence": "Are you sure this is your notebook?",
+        "group": "ure"
+      },
+      {
+        "word": "lure",
+        "sentence": "Bright lights can lure moths at night.",
+        "group": "ure"
+      },
+      {
+        "word": "pure",
+        "sentence": "The stream had pure, clear water.",
+        "group": "ure"
+      },
+      {
+        "word": "cure",
+        "sentence": "Rest and fluids can help cure a cold.",
+        "group": "ure"
+      },
+      {
+        "word": "curve",
+        "sentence": "Slow down at the curve in the road.",
+        "group": "ur_e"
+      },
+      {
+        "word": "nurse",
+        "sentence": "The nurse checked my temperature.",
+        "group": "ur_e"
+      },
+      {
+        "word": "purse",
+        "sentence": "She put her keys in her purse.",
+        "group": "ur_e"
+      },
+      {
+        "word": "curse",
+        "sentence": "In the story, a curse was broken.",
+        "group": "ur_e"
+      },
+      {
+        "word": "urge",
+        "sentence": "I urge you to finish your homework first.",
+        "group": "ur_e"
+      },
+      {
+        "word": "were",
+        "sentence": "We were ready before the bell rang.",
+        "group": "oddball"
+      },
+      {
+        "word": "our",
+        "sentence": "Our class planted flowers today.",
+        "group": "oddball"
+      }
+    ]
+  },
+  {
     "id": "sort-31",
     "label": "Sort #31 (or / ore / oar / our / oddballs)",
     "groups": ["or", "ore", "oar", "our", "oddballs"],
