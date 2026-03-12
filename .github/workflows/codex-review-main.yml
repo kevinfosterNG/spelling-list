@@ -1,0 +1,64 @@
+name: Codex Review (main PRs)
+
+on:
+  pull_request_target:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - ready_for_review
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  trigger-codex-review:
+    # PR is marked as ready (not a draft).
+    # PR is not a production release branch flowing back to development.
+    if: >
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.ref != 'staging' &&
+      github.event.pull_request.head.ref != 'production'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post Codex review trigger comment once
+        uses: actions/github-script@v7
+        with:
+          # User PAT (with @codex usage)
+          github-token: ${{ secrets.CODEX_TRIGGER_PAT }}
+          script: |
+            const marker = '<!-- codex-review-trigger:main:v2 -->';
+            const triggerText = '@codex review';
+            const { owner, repo } = context.repo;
+            const issue_number = context.issue.number;
+
+            const comments = await github.paginate(
+              github.rest.issues.listComments,
+              {
+                owner,
+                repo,
+                issue_number,
+                per_page: 100
+              }
+            );
+
+            const alreadyTriggered = comments.some((comment) =>
+              typeof comment.body === 'string' && comment.body.includes(marker)
+            );
+
+            if (alreadyTriggered) {
+              core.info('Codex review trigger comment already exists. Skipping.');
+              return;
+            }
+
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number,
+              body: `${triggerText}\n\n${marker}`
+            });
+
+            core.info('Posted @codex review trigger comment.');
