@@ -6,7 +6,7 @@ Practice spelling words by hearing them aloud, typing what you hear, and draggin
 - https://gentle-smoke-0a84cc810.4.azurestaticapps.net/
 
 ## Run locally
-- Install dependencies: `npm install`
+- Install dependencies: `npm ci`
 - Start the dev server: `npm run dev` then open http://localhost:3000
 - Build a static export: `npm run build` (output in `out/`)
 
@@ -40,7 +40,7 @@ Example entry:
 ### Release process (admins)
 - PR checks run on every PR (including Dependabot and forks).
 - Deploys occur on pushes to `main` **or** tags matching `v*`.
-- To cut a release via GitHub UI: Actions → **Manual Release Tag** → Run workflow.
+- To cut a release via GitHub UI: Actions -> **Manual Release Tag** -> Run workflow.
   - `target_ref`: branch to release from (default `main`).
   - `release_type`: `patch`/`minor`/`major` or a pre* variant; use `custom_version` to force a specific semver.
   - Workflow bumps `package.json`/`package-lock.json`, commits, tags `v<version>`, publishes a GitHub Release, and the tag triggers the Azure Static Web Apps deploy.
