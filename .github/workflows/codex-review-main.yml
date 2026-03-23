@@ -1,13 +1,7 @@
-name: Codex Review (main PRs)
+name: Codex Review (main PRs) [disabled]
 
 on:
-  pull_request_target:
-    branches:
-      - main
-    types:
-      - opened
-      - reopened
-      - ready_for_review
+  workflow_dispatch:
 
 permissions:
   contents: read
