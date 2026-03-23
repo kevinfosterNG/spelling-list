@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "node scripts/verify-lint-deps.mjs && eslint",
     "test": "tsx --test"
   },
   "dependencies": {
