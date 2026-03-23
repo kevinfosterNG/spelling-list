@@ -150,7 +150,10 @@ export default function Home() {
     }
   };
 
-  const allBucketKeys = activeList ? [...activeList.groups] : [];
+  const allBucketKeys = activeList?.groups ?? [];
+  const dragInstruction = allBucketKeys.length
+    ? `Drag this card into ${allBucketKeys.join(" / ")}.`
+    : "Drag this card into a sort group.";
 
   const handleDrop = (
     targetKey: string,
@@ -443,9 +446,7 @@ export default function Home() {
                     "_____",
                   )}
                 </p>
-                <p className="mt-2 text-xs text-slate-500">
-                  Drag this card into ar / air / are / oddball.
-                </p>
+                <p className="mt-2 text-xs text-slate-500">{dragInstruction}</p>
               </article>
             ) : null}
           </section>
