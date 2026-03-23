@@ -1,5 +1,132 @@
 [
   {
+    "id": "sort-33",
+    "label": "Sort #33 (ur / or / ar)",
+    "groups": ["ur", "or", "ar"],
+    "words": [
+      {
+        "word": "sir",
+        "sentence": "Yes, sir, I finished my work.",
+        "group": "ur"
+      },
+      {
+        "word": "lurk",
+        "sentence": "Shadows can lurk in dark corners.",
+        "group": "ur"
+      },
+      {
+        "word": "pearl",
+        "sentence": "The pearl shined in the light.",
+        "group": "ur"
+      },
+      {
+        "word": "stir",
+        "sentence": "Please stir the soup slowly.",
+        "group": "ur"
+      },
+      {
+        "word": "worst",
+        "sentence": "That was the worst storm this year.",
+        "group": "ur"
+      },
+      {
+        "word": "spur",
+        "sentence": "The horse wore a shiny spur.",
+        "group": "ur"
+      },
+      {
+        "word": "earn",
+        "sentence": "You can earn a sticker for neat writing.",
+        "group": "ur"
+      },
+      {
+        "word": "serve",
+        "sentence": "I can serve juice at snack time.",
+        "group": "ur"
+      },
+      {
+        "word": "fort",
+        "sentence": "We built a fort with blankets.",
+        "group": "or"
+      },
+      {
+        "word": "pour",
+        "sentence": "Please pour milk into the cup.",
+        "group": "or"
+      },
+      {
+        "word": "hoarse",
+        "sentence": "My voice sounded hoarse after cheering.",
+        "group": "or"
+      },
+      {
+        "word": "horse",
+        "sentence": "The horse ran across the field.",
+        "group": "or"
+      },
+      {
+        "word": "fore",
+        "sentence": "A fore wing helps the insect fly.",
+        "group": "or"
+      },
+      {
+        "word": "chore",
+        "sentence": "My chore is to feed the dog.",
+        "group": "or"
+      },
+      {
+        "word": "boar",
+        "sentence": "A boar moved through the forest.",
+        "group": "or"
+      },
+      {
+        "word": "bore",
+        "sentence": "Please do not bore holes in the wall.",
+        "group": "or"
+      },
+      {
+        "word": "score",
+        "sentence": "Our team got a high score.",
+        "group": "or"
+      },
+      {
+        "word": "snore",
+        "sentence": "I heard a loud snore from the tent.",
+        "group": "or"
+      },
+      {
+        "word": "poor",
+        "sentence": "The plant looked poor without water.",
+        "group": "or"
+      },
+      {
+        "word": "thorn",
+        "sentence": "A thorn scratched my glove.",
+        "group": "or"
+      },
+      {
+        "word": "jar",
+        "sentence": "The cookies are in the jar.",
+        "group": "ar"
+      },
+      {
+        "word": "hard",
+        "sentence": "Math felt hard today.",
+        "group": "ar"
+      },
+      {
+        "word": "yarn",
+        "sentence": "Grandma knitted with blue yarn.",
+        "group": "ar"
+      },
+      {
+        "word": "march",
+        "sentence": "We will march in the school parade.",
+        "group": "ar"
+      }
+    ]
+  },
+  {
     "id": "sort-32",
     "label": "Sort #32 (ur / ure / ur_e / oddball)",
     "groups": ["ur", "ure", "ur_e", "oddball"],
