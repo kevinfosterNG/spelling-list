@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Post Codex review trigger comment once
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           # User PAT (with @codex usage)
           github-token: ${{ secrets.CODEX_TRIGGER_PAT }}
