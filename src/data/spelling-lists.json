@@ -1,5 +1,132 @@
 [
   {
+    "id": "sort-35",
+    "label": "Sort #35 (long -o / oi / oy)",
+    "groups": ["long -o", "oi", "oy"],
+    "words": [
+      {
+        "word": "whole",
+        "sentence": "I ate the whole apple at lunch.",
+        "group": "long -o"
+      },
+      {
+        "word": "bowl",
+        "sentence": "The soup cooled in the bowl.",
+        "group": "long -o"
+      },
+      {
+        "word": "stole",
+        "sentence": "A raccoon stole a cracker from the picnic table.",
+        "group": "long -o"
+      },
+      {
+        "word": "loan",
+        "sentence": "Dad took out a loan to buy the truck.",
+        "group": "long -o"
+      },
+      {
+        "word": "cloak",
+        "sentence": "The wizard wore a dark cloak.",
+        "group": "long -o"
+      },
+      {
+        "word": "choke",
+        "sentence": "Chew carefully so you do not choke.",
+        "group": "long -o"
+      },
+      {
+        "word": "point",
+        "sentence": "Please point to the word you hear.",
+        "group": "oi"
+      },
+      {
+        "word": "join",
+        "sentence": "Come join our game at recess.",
+        "group": "oi"
+      },
+      {
+        "word": "soil",
+        "sentence": "Seeds grow well in rich soil.",
+        "group": "oi"
+      },
+      {
+        "word": "spoil",
+        "sentence": "Warm weather can spoil the milk.",
+        "group": "oi"
+      },
+      {
+        "word": "coin",
+        "sentence": "I found a shiny coin on the sidewalk.",
+        "group": "oi"
+      },
+      {
+        "word": "foil",
+        "sentence": "Wrap the potato in foil before baking it.",
+        "group": "oi"
+      },
+      {
+        "word": "voice",
+        "sentence": "Her voice was easy to hear across the room.",
+        "group": "oi"
+      },
+      {
+        "word": "choice",
+        "sentence": "Reading after dinner was a good choice.",
+        "group": "oi"
+      },
+      {
+        "word": "moist",
+        "sentence": "The cake stayed moist in the container.",
+        "group": "oi"
+      },
+      {
+        "word": "joint",
+        "sentence": "My elbow is a joint that helps my arm bend.",
+        "group": "oi"
+      },
+      {
+        "word": "boil",
+        "sentence": "Watch the water boil in the pot.",
+        "group": "oi"
+      },
+      {
+        "word": "coil",
+        "sentence": "The snake began to coil around the branch.",
+        "group": "oi"
+      },
+      {
+        "word": "broil",
+        "sentence": "We broil the fish for a quick dinner.",
+        "group": "oi"
+      },
+      {
+        "word": "oil",
+        "sentence": "The cook poured oil into the pan.",
+        "group": "oi"
+      },
+      {
+        "word": "boy",
+        "sentence": "The boy carried his backpack to class.",
+        "group": "oy"
+      },
+      {
+        "word": "soy",
+        "sentence": "We added soy sauce to the rice.",
+        "group": "oy"
+      },
+      {
+        "word": "joy",
+        "sentence": "The puppy jumped with joy.",
+        "group": "oy"
+      },
+      {
+        "word": "toy",
+        "sentence": "She picked up her favorite toy.",
+        "group": "oy"
+      }
+    ]
+  },
+  {
     "id": "sort-33",
     "label": "Sort #33 (ur / or / ar)",
     "groups": ["ur", "or", "ar"],
