@@ -7,6 +7,10 @@ updates:
       day: "monday"
       time: "07:00"
       timezone: "America/New_York"
+    ignore:
+      - dependency-name: "eslint"
+        versions:
+          - "10.x"
     groups:
       minor-and-patch:
         patterns:
