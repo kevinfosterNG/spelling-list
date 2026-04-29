@@ -1,5 +1,137 @@
 [
   {
+    "id": "sort-36",
+    "label": "Sort #36 (long oo / short oo / oddballs)",
+    "groups": ["long oo", "short oo", "oddballs"],
+    "words": [
+      {
+        "word": "soon",
+        "sentence": "We will leave soon after lunch.",
+        "group": "long oo"
+      },
+      {
+        "word": "cool",
+        "sentence": "The water felt cool on my hands.",
+        "group": "long oo"
+      },
+      {
+        "word": "fool",
+        "sentence": "Do not fool your friend with a trick.",
+        "group": "long oo"
+      },
+      {
+        "word": "noon",
+        "sentence": "We eat lunch at noon.",
+        "group": "long oo"
+      },
+      {
+        "word": "groom",
+        "sentence": "The groom stood beside the bride.",
+        "group": "long oo"
+      },
+      {
+        "word": "roost",
+        "sentence": "The team chose a high roost for the camera.",
+        "group": "long oo"
+      },
+      {
+        "word": "root",
+        "sentence": "The tree root pushed up the sidewalk.",
+        "group": "long oo"
+      },
+      {
+        "word": "smooth",
+        "sentence": "The stone felt smooth in my palm.",
+        "group": "long oo"
+      },
+      {
+        "word": "troop",
+        "sentence": "Our troop met in the gym after school.",
+        "group": "long oo"
+      },
+      {
+        "word": "hoop",
+        "sentence": "The ball went through the hoop.",
+        "group": "long oo"
+      },
+      {
+        "word": "stool",
+        "sentence": "She sat on a stool at the counter.",
+        "group": "long oo"
+      },
+      {
+        "word": "proof",
+        "sentence": "Show your proof before you answer.",
+        "group": "long oo"
+      },
+      {
+        "word": "gloom",
+        "sentence": "A little sunlight brightened the gloom.",
+        "group": "long oo"
+      },
+      {
+        "word": "good",
+        "sentence": "That was a good idea.",
+        "group": "short oo"
+      },
+      {
+        "word": "brook",
+        "sentence": "A small brook ran beside the trail.",
+        "group": "short oo"
+      },
+      {
+        "word": "crook",
+        "sentence": "The detective caught the crook.",
+        "group": "short oo"
+      },
+      {
+        "word": "wood",
+        "sentence": "The shelf was made of wood.",
+        "group": "short oo"
+      },
+      {
+        "word": "hoof",
+        "sentence": "A hoof print marked the soft ground.",
+        "group": "short oo"
+      },
+      {
+        "word": "hook",
+        "sentence": "Hang your coat on the hook.",
+        "group": "short oo"
+      },
+      {
+        "word": "stood",
+        "sentence": "She stood in line for a ticket.",
+        "group": "short oo"
+      },
+      {
+        "word": "shook",
+        "sentence": "He shook the box gently.",
+        "group": "short oo"
+      },
+      {
+        "word": "could",
+        "sentence": "I could read one more page.",
+        "group": "oddballs"
+      },
+      {
+        "word": "would",
+        "sentence": "She would like a turn next.",
+        "group": "oddballs"
+      },
+      {
+        "word": "should",
+        "sentence": "You should bring your notebook.",
+        "group": "oddballs"
+      },
+      {
+        "word": "route",
+        "sentence": "We took a new route to school.",
+        "group": "oddballs"
+      }
+    ]
+  },
+  {
     "id": "sort-35",
     "label": "Sort #35 (long -o / oi / oy)",
     "groups": ["long -o", "oi", "oy"],
