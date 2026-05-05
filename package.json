@@ -22,8 +22,12 @@
     "@types/react-dom": "^19",
     "eslint": "^9.39.1",
     "eslint-config-next": "16.2.3",
+    "postcss": "^8.5.10",
     "tailwindcss": "^4",
     "tsx": "^4.19.1",
     "typescript": "^6"
+  },
+  "overrides": {
+    "postcss": "^8.5.10"
   }
 }
